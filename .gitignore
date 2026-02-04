@@ -3,4 +3,5 @@ node_modules/
 *.log
 .env
 .vscode/
-src/css/output.css
+src/css/tailwind.css
+documentation/api-reference.md

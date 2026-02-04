@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "tailwindcss -i ./src/css/input.css -o ./src/css/output.css --minify",
-    "watch": "tailwindcss -i ./src/css/input.css -o ./src/css/output.css --watch",
+    "build": "tailwindcss -i ./src/css/tailwind.input.css -o ./src/css/tailwind.css --minify",
+    "watch": "tailwindcss -i ./src/css/tailwind.input.css -o ./src/css/tailwind.css --watch",
     "format": "prettier --write \"**/*.{js,html,css,md}\""
   },
   "keywords": [
