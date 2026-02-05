@@ -3,9 +3,16 @@ import { getUser } from '../utils/storage.js';
 import { renderHeader } from '../components/header.js';
 import { renderFooter } from '../components/footer.js';
 import { createLoader } from '../components/loader.js';
+import { createLogoBackground } from '../components/logoBackground.js';
 
 renderHeader();
 renderFooter();
+
+// Add background logo (again, temp)
+const body = document.querySelector('body');
+if (body) {
+  body.insertBefore(createLogoBackground(), body.firstChild);
+}
 
 /**
  * Checks if user is logged in
@@ -38,7 +45,7 @@ function createRegisterForm() {
 
   const container = document.createElement('div');
   container.className =
-    'flex flex-col items-center justify-center min-h-[calc(100vh-200px)] px-4 py-8 pt-24 md:pb-8';
+    'relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-200px)] px-4 py-8 pt-24 md:pb-8';
 
   const form = document.createElement('form');
   form.className = 'flex flex-col w-full max-w-md gap-6';
@@ -121,7 +128,7 @@ function createRegisterForm() {
   fieldsContainer.appendChild(passwordInput);
 
   const passwordHint = document.createElement('p');
-  passwordHint.className = '-mt-2 text-xs text-cool-steel-500';
+  passwordHint.className = '-mt-2 text-xs text-cool-steel-700';
   passwordHint.textContent = 'Minimum 8 characters';
   fieldsContainer.appendChild(passwordHint);
 
