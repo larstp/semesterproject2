@@ -46,7 +46,7 @@ function createRegisterForm() {
 
   const header = document.createElement('h1');
   header.className =
-    'mb-2 text-3xl font-semibold text-center text-blue-slate-900';
+    'mb-2 text-3xl font-semibold text-center text-blue-slate-900 font-display';
   header.textContent = 'Create your Barter account';
   form.appendChild(header);
 

@@ -41,20 +41,20 @@ function createLoginForm() {
     'flex flex-col items-center justify-center min-h-[calc(100vh-200px)] px-4 py-8 pt-24 md:pb-8';
 
   const form = document.createElement('form');
-  form.className = 'w-full max-w-md flex flex-col gap-6';
+  form.className = 'flex flex-col w-full max-w-md gap-6';
   form.setAttribute('aria-label', 'Login form');
 
   const header = document.createElement('h1');
   header.className =
-    'text-3xl font-semibold text-center text-blue-slate-900 mb-4';
+    'text-3xl font-semibold text-center text-blue-slate-900 mb-4 font-display';
   header.textContent = 'Log in to Barter';
   form.appendChild(header);
 
   const fieldsContainer = document.createElement('div');
-  fieldsContainer.className = 'login-fields flex flex-col gap-4';
+  fieldsContainer.className = 'flex flex-col gap-4 login-fields';
 
   const emailLabel = document.createElement('label');
-  emailLabel.className = 'block text-cool-steel-800 text-sm font-semibold mb-2';
+  emailLabel.className = 'block mb-2 text-sm font-semibold text-cool-steel-800';
   emailLabel.textContent = 'Email';
   emailLabel.setAttribute('for', 'email');
   fieldsContainer.appendChild(emailLabel);
@@ -64,7 +64,7 @@ function createLoginForm() {
   emailInput.id = 'email';
   emailInput.name = 'email';
   emailInput.className =
-    'w-full p-4 bg-white border-2 border-cool-steel-200 rounded-lg text-blue-slate-900 text-base transition-all duration-300 placeholder:text-cool-steel-400 focus:outline-none focus:border-blue-slate-500 focus:ring-2 focus:ring-blue-slate-200';
+    'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-cool-steel-200 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-blue-slate-500 focus:ring-2 focus:ring-blue-slate-200';
   emailInput.placeholder = 'example@stud.noroff.no';
   emailInput.required = true;
   emailInput.setAttribute('aria-label', 'Email address');
@@ -74,7 +74,7 @@ function createLoginForm() {
 
   const passwordLabel = document.createElement('label');
   passwordLabel.className =
-    'block text-cool-steel-800 text-sm font-semibold mb-2';
+    'block mb-2 text-sm font-semibold text-cool-steel-800';
   passwordLabel.textContent = 'Password';
   passwordLabel.setAttribute('for', 'password');
   fieldsContainer.appendChild(passwordLabel);
@@ -84,7 +84,7 @@ function createLoginForm() {
   passwordInput.id = 'password';
   passwordInput.name = 'password';
   passwordInput.className =
-    'w-full p-4 bg-white border-2 border-cool-steel-200 rounded-lg text-blue-slate-900 text-base transition-all duration-300 placeholder:text-cool-steel-400 focus:outline-none focus:border-blue-slate-500 focus:ring-2 focus:ring-blue-slate-200';
+    'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-cool-steel-200 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-blue-slate-500 focus:ring-2 focus:ring-blue-slate-200';
   passwordInput.placeholder = '••••••••';
   passwordInput.required = true;
   passwordInput.minLength = 8;
@@ -102,7 +102,7 @@ function createLoginForm() {
   form.appendChild(submitButton);
 
   const registerText = document.createElement('p');
-  registerText.className = 'text-center text-cool-steel-600 text-sm';
+  registerText.className = 'text-sm text-center text-cool-steel-600';
 
   const textNode = document.createTextNode("Don't have an account? ");
   registerText.appendChild(textNode);
@@ -110,7 +110,7 @@ function createLoginForm() {
   const registerLink = document.createElement('a');
   registerLink.href = './register.html';
   registerLink.className =
-    'text-blue-slate-600 no-underline font-semibold transition-colors duration-300 hover:text-blue-slate-700 hover:underline';
+    'font-semibold no-underline transition-colors duration-300 text-blue-slate-600 hover:text-blue-slate-700 hover:underline';
   registerLink.textContent = 'Click here to register';
   registerText.appendChild(registerLink);
 
@@ -169,7 +169,7 @@ function createLoginForm() {
 function showError(form, message) {
   const errorDiv = document.createElement('div');
   errorDiv.className =
-    'p-4 bg-petal-frost-50 border border-petal-frost-300 rounded-lg text-petal-frost-700 text-center text-sm';
+    'p-4 text-sm text-center border rounded-lg bg-petal-frost-50 border-petal-frost-300 text-petal-frost-700';
   errorDiv.textContent = message;
   errorDiv.setAttribute('role', 'alert');
   errorDiv.setAttribute('data-error', 'login');

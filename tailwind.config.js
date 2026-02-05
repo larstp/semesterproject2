@@ -2,6 +2,28 @@ export default {
   content: ['./index.html', './src/**/*.{html,js}'],
   theme: {
     extend: {
+      fontFamily: {
+        sans: [
+          'Roboto',
+          'system-ui',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'Ubuntu',
+          'Helvetica Neue',
+          'sans-serif',
+        ],
+        display: [
+          'Montserrat',
+          'system-ui',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'Ubuntu',
+          'Helvetica Neue',
+          'sans-serif',
+        ],
+      },
       colors: {
         'blue-slate': {
           50: '#f0f3f4',
