@@ -18,7 +18,8 @@ export async function register(name, email, password) {
   return await response.json();
 }
 
-export async function login(email, password) {
+export async function login(email, password, remember = true) {
+  // this was confusing
   const response = await fetch(API_ENDPOINTS.auth.login, {
     method: 'POST',
     headers: {
@@ -35,11 +36,11 @@ export async function login(email, password) {
   const data = await response.json();
 
   if (data.data.accessToken) {
-    saveToken(data.data.accessToken);
+    saveToken(data.data.accessToken, remember);
   }
 
   if (data.data) {
-    saveUser(data.data);
+    saveUser(data.data, remember);
   }
 
   return data;

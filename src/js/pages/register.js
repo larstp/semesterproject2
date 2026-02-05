@@ -5,14 +5,13 @@ import { renderFooter } from '../components/footer.js';
 import { createLoader } from '../components/loader.js';
 import { createLogoBackground } from '../components/logoBackground.js';
 
-renderHeader();
-renderFooter();
-
-// Add background logo (again, temp)
 const body = document.querySelector('body');
 if (body) {
   body.insertBefore(createLogoBackground(), body.firstChild);
+  body.insertBefore(renderHeader(), body.firstChild);
 }
+
+renderFooter();
 
 /**
  * Checks if user is logged in
@@ -53,7 +52,7 @@ function createRegisterForm() {
 
   const header = document.createElement('h1');
   header.className =
-    'mb-2 text-3xl font-semibold text-center text-blue-slate-900 font-display';
+    'mb-2 text-3xl font-light text-center text-blue-slate-900 font-display';
   header.textContent = 'Create your Barter account';
   form.appendChild(header);
 

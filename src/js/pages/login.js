@@ -5,14 +5,13 @@ import { renderFooter } from '../components/footer.js';
 import { createLoader } from '../components/loader.js';
 import { createLogoBackground } from '../components/logoBackground.js';
 
-renderHeader();
-renderFooter();
-
-// Add background logo (temp. ill see how it looks)
 const body = document.querySelector('body');
 if (body) {
   body.insertBefore(createLogoBackground(), body.firstChild);
+  body.insertBefore(renderHeader(), body.firstChild);
 }
+
+renderFooter();
 
 /**
  * Checks if user is logged in
@@ -53,7 +52,7 @@ function createLoginForm() {
 
   const header = document.createElement('h1');
   header.className =
-    'text-3xl font-semibold text-center text-blue-slate-900 mb-4 font-display';
+    'mb-4 text-3xl font-semibold text-center text-blue-slate-900 font-display';
   header.textContent = 'Log in to Barter';
   form.appendChild(header);
 
@@ -101,6 +100,27 @@ function createLoginForm() {
 
   form.appendChild(fieldsContainer);
 
+  // Remember me checkbox test
+  const rememberContainer = document.createElement('div');
+  rememberContainer.className = 'flex items-center gap-2';
+
+  const rememberCheckbox = document.createElement('input');
+  rememberCheckbox.type = 'checkbox';
+  rememberCheckbox.id = 'remember';
+  rememberCheckbox.name = 'remember';
+  rememberCheckbox.checked = true; // Default to checked is probably best, might change
+  rememberCheckbox.className =
+    'w-4 h-4 bg-white border-2 rounded cursor-pointer text-blue-slate-600 border-cool-steel-300 focus:ring-2 focus:ring-blue-slate-200';
+
+  const rememberLabel = document.createElement('label');
+  rememberLabel.setAttribute('for', 'remember');
+  rememberLabel.className = 'text-sm cursor-pointer text-cool-steel-700';
+  rememberLabel.textContent = 'Remember me';
+
+  rememberContainer.appendChild(rememberCheckbox);
+  rememberContainer.appendChild(rememberLabel);
+  form.appendChild(rememberContainer);
+
   const submitButton = document.createElement('button');
   submitButton.type = 'submit';
   submitButton.className =
@@ -133,6 +153,7 @@ function createLoginForm() {
 
     const email = emailInput.value.trim();
     const password = passwordInput.value;
+    const remember = rememberCheckbox.checked;
 
     if (!email || !password) {
       showError(form, 'Please fill in all fields');
@@ -151,7 +172,7 @@ function createLoginForm() {
     fieldsContainer.insertAdjacentElement('afterend', loader);
 
     try {
-      await login(email, password);
+      await login(email, password, remember);
 
       window.location.href = '../../index.html';
     } catch (error) {
