@@ -64,7 +64,6 @@ function createRegisterForm() {
   const fieldsContainer = document.createElement('div');
   fieldsContainer.className = 'flex flex-col gap-4 register-fields';
 
-  // Name field
   const nameLabel = document.createElement('label');
   nameLabel.className = 'block mb-2 text-sm font-semibold text-cool-steel-800';
   nameLabel.textContent = 'Username';
@@ -85,7 +84,25 @@ function createRegisterForm() {
     'Username can only contain letters, numbers, and underscores';
   fieldsContainer.appendChild(nameInput);
 
-  // Email field
+  // -------------------------------------------------------------- Username validation feedback test
+  nameInput.addEventListener('blur', () => {
+    const value = nameInput.value.trim();
+    const isValid = /^[a-zA-Z0-9_]+$/.test(value);
+    if (value && isValid) {
+      nameInput.className =
+        'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-celadon-500 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-celadon-600 focus:ring-2 focus:ring-celadon-200';
+      nameInput.setAttribute('aria-invalid', 'false');
+    } else if (value) {
+      nameInput.className =
+        'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-petal-frost-500 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-petal-frost-600 focus:ring-2 focus:ring-petal-frost-200';
+      nameInput.setAttribute('aria-invalid', 'true');
+    } else {
+      nameInput.className =
+        'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-cool-steel-200 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-blue-slate-500 focus:ring-2 focus:ring-blue-slate-200';
+      nameInput.removeAttribute('aria-invalid');
+    }
+  });
+
   const emailLabel = document.createElement('label');
   emailLabel.className = 'block mb-2 text-sm font-semibold text-cool-steel-800';
   emailLabel.textContent = 'Email';
@@ -105,10 +122,45 @@ function createRegisterForm() {
   emailInput.title = 'Email must end with @stud.noroff.no';
   fieldsContainer.appendChild(emailInput);
 
-  // Password field
+  // -------------------------------------------------- Email validation feedback test
+  emailInput.addEventListener('blur', () => {
+    const value = emailInput.value.trim();
+    if (value && value.endsWith('@stud.noroff.no')) {
+      emailInput.className =
+        'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-celadon-500 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-celadon-600 focus:ring-2 focus:ring-celadon-200';
+      emailInput.setAttribute('aria-invalid', 'false');
+    } else if (value) {
+      emailInput.className =
+        'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-petal-frost-500 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-petal-frost-600 focus:ring-2 focus:ring-petal-frost-200';
+      emailInput.setAttribute('aria-invalid', 'true');
+    } else {
+      emailInput.className =
+        'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-cool-steel-200 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-blue-slate-500 focus:ring-2 focus:ring-blue-slate-200';
+      emailInput.removeAttribute('aria-invalid');
+    }
+  });
+
   const passwordLabel = document.createElement('label');
   passwordLabel.className =
-    'block mb-2 text-sm font-semibold text-cool-steel-800';
+    // ------------------------------------------------------------- Password validation feedback test
+    passwordInput.addEventListener('blur', () => {
+      const value = passwordInput.value;
+      if (value && value.length >= 8) {
+        passwordInput.className =
+          'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-celadon-500 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-celadon-600 focus:ring-2 focus:ring-celadon-200';
+        passwordInput.setAttribute('aria-invalid', 'false');
+      } else if (value) {
+        passwordInput.className =
+          'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-petal-frost-500 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-petal-frost-600 focus:ring-2 focus:ring-petal-frost-200';
+        passwordInput.setAttribute('aria-invalid', 'true');
+      } else {
+        passwordInput.className =
+          'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-cool-steel-200 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-blue-slate-500 focus:ring-2 focus:ring-blue-slate-200';
+        passwordInput.removeAttribute('aria-invalid');
+      }
+    });
+
+  ('block mb-2 text-sm font-semibold text-cool-steel-800');
   passwordLabel.textContent = 'Password';
   passwordLabel.setAttribute('for', 'password');
   fieldsContainer.appendChild(passwordLabel);

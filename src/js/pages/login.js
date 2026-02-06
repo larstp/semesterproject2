@@ -78,6 +78,24 @@ function createLoginForm() {
   emailInput.title = 'Email must end with @stud.noroff.no';
   fieldsContainer.appendChild(emailInput);
 
+  // ----------------------------------------------------------------  Email validation feedback test
+  emailInput.addEventListener('blur', () => {
+    const value = emailInput.value.trim();
+    if (value && value.endsWith('@stud.noroff.no')) {
+      emailInput.className =
+        'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-celadon-500 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-celadon-600 focus:ring-2 focus:ring-celadon-200';
+      emailInput.setAttribute('aria-invalid', 'false');
+    } else if (value) {
+      emailInput.className =
+        'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-petal-frost-500 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-petal-frost-600 focus:ring-2 focus:ring-petal-frost-200';
+      emailInput.setAttribute('aria-invalid', 'true');
+    } else {
+      emailInput.className =
+        'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-cool-steel-200 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-blue-slate-500 focus:ring-2 focus:ring-blue-slate-200'; // i like tailwind but the long ones are very hard to read
+      emailInput.removeAttribute('aria-invalid');
+    }
+  });
+
   const passwordLabel = document.createElement('label');
   passwordLabel.className =
     'block mb-2 text-sm font-semibold text-cool-steel-800';
@@ -98,9 +116,26 @@ function createLoginForm() {
   passwordInput.setAttribute('aria-label', 'Password');
   fieldsContainer.appendChild(passwordInput);
 
+  // --------------------------------------------------------------- Password validation feedback test
+  passwordInput.addEventListener('blur', () => {
+    const value = passwordInput.value;
+    if (value && value.length >= 8) {
+      passwordInput.className =
+        'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-celadon-500 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-celadon-600 focus:ring-2 focus:ring-celadon-200';
+      passwordInput.setAttribute('aria-invalid', 'false');
+    } else if (value) {
+      passwordInput.className =
+        'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-petal-frost-500 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-petal-frost-600 focus:ring-2 focus:ring-petal-frost-200';
+      passwordInput.setAttribute('aria-invalid', 'true');
+    } else {
+      passwordInput.className =
+        'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-cool-steel-200 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-blue-slate-500 focus:ring-2 focus:ring-blue-slate-200';
+      passwordInput.removeAttribute('aria-invalid');
+    }
+  });
+
   form.appendChild(fieldsContainer);
 
-  // Remember me checkbox test
   const rememberContainer = document.createElement('div');
   rememberContainer.className = 'flex items-center gap-2';
 
@@ -174,7 +209,26 @@ function createLoginForm() {
     try {
       await login(email, password, remember);
 
-      window.location.href = '../../index.html';
+      loader.remove();
+
+      const successDiv = document.createElement('div');
+      successDiv.className =
+        'p-4 text-sm text-center border rounded-lg bg-celadon-50 border-celadon-300 text-celadon-700';
+      successDiv.textContent = 'Login successful! Redirecting...';
+      successDiv.setAttribute('role', 'status');
+      fieldsContainer.insertAdjacentElement('afterend', successDiv);
+
+      setTimeout(() => {
+        // ----------------------------------------------------Check for redirect parameter in URL test
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectUrl = urlParams.get('redirect');
+
+        if (redirectUrl) {
+          window.location.href = redirectUrl;
+        } else {
+          window.location.href = '../../index.html';
+        }
+      }, 1000);
     } catch (error) {
       loader.remove();
 
