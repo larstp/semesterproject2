@@ -1,17 +1,9 @@
 import { login } from '../api/auth.js';
 import { getUser } from '../utils/storage.js';
-import { renderHeader } from '../components/header.js';
-import { renderFooter } from '../components/footer.js';
 import { createLoader } from '../components/loader.js';
-import { createLogoBackground } from '../components/logoBackground.js';
+import { initializePage } from '../utils/main.js';
 
-const body = document.querySelector('body');
-if (body) {
-  body.insertBefore(createLogoBackground(), body.firstChild);
-  body.insertBefore(renderHeader(), body.firstChild);
-}
-
-renderFooter();
+initializePage({ includeLogoBackground: true });
 
 /**
  * Checks if user is logged in
@@ -52,7 +44,7 @@ function createLoginForm() {
 
   const header = document.createElement('h1');
   header.className =
-    'mb-4 text-3xl font-semibold text-center text-blue-slate-900 font-display';
+    'mb-4 text-3xl font-light text-center text-blue-slate-900 font-display';
   header.textContent = 'Log in to Barter';
   form.appendChild(header);
 

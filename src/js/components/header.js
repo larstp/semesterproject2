@@ -1,22 +1,51 @@
 import { getUser } from '../utils/storage.js';
 
 /**
- * Creates the hamburger menu button for mobile
- * @returns {HTMLButtonElement} The hamburger button element
+ * Creates the credits display for mobile (icon + number)
+ * @param {Object|null} user - The user object from storage
+ * @returns {HTMLDivElement} The credits display element
  */
-function createHamburgerButton() {
-  const button = document.createElement('button');
-  button.className =
-    'p-2 text-2xl transition-colors text-blue-slate-700 hover:text-blue-slate-900';
-  button.setAttribute('aria-label', 'Open menu');
-  button.textContent = '☰';
+function createMobileCreditsDisplay(user) {
+  const container = document.createElement('div');
+  container.className = 'flex items-center gap-2';
 
-  // Ill make it work later!
-  button.addEventListener('click', () => {
-    console.log('Hamburger menu clicked - implement menu toggle lateeeeeer');
-  });
+  const icon = document.createElement('img');
+  icon.src = '/public/icons/ph_currency-eth-bold.svg';
+  icon.alt = 'Credits';
+  icon.className = 'w-6 h-6';
 
-  return button;
+  const creditsText = document.createElement('span');
+  creditsText.className = 'text-sm font-semibold text-blue-slate-700';
+  creditsText.textContent = user?.credits?.toLocaleString() || '0';
+
+  container.appendChild(icon);
+  container.appendChild(creditsText);
+
+  return container;
+}
+
+/**
+ * Creates the credits display for desktop (icon + "Credits:" + number)
+ * @param {Object|null} user - The user object from storage
+ * @returns {HTMLDivElement} The credits display element
+ */
+function createDesktopCreditsDisplay(user) {
+  const container = document.createElement('div');
+  container.className = 'items-center hidden gap-2 lg:flex';
+
+  const icon = document.createElement('img');
+  icon.src = '/public/icons/ph_currency-eth-bold.svg';
+  icon.alt = 'Credits';
+  icon.className = 'w-5 h-5';
+
+  const creditsText = document.createElement('span');
+  creditsText.className = 'text-sm font-semibold text-blue-slate-700';
+  creditsText.textContent = `Credits: ${user?.credits?.toLocaleString() || '0'}`;
+
+  container.appendChild(icon);
+  container.appendChild(creditsText);
+
+  return container;
 }
 
 /**
@@ -213,9 +242,18 @@ export function renderHeader() {
 
   const logo = createLogoLink();
 
+  const desktopLeft = document.createElement('div');
+  desktopLeft.className = 'items-center hidden gap-4 lg:flex';
+  desktopLeft.appendChild(logo);
+  if (user) {
+    desktopLeft.appendChild(createDesktopCreditsDisplay(user));
+  }
+
   const mobileLeft = document.createElement('div');
   mobileLeft.className = 'flex items-center justify-start lg:hidden';
-  mobileLeft.appendChild(createHamburgerButton());
+  if (user) {
+    mobileLeft.appendChild(createMobileCreditsDisplay(user));
+  }
 
   const mobileRight = document.createElement('div');
   mobileRight.className = 'flex items-center justify-end lg:hidden';
@@ -230,9 +268,16 @@ export function renderHeader() {
 
   const desktopNav = createDesktopNav(user, isLoginPage);
 
+  // Mobile layout: credits (left) | logo (center) | profile/login (right)
   container.appendChild(mobileLeft);
-  container.appendChild(logo);
+  const mobileLogo = document.createElement('div');
+  mobileLogo.className = 'flex items-center justify-center lg:hidden';
+  mobileLogo.appendChild(createLogoLink());
+  container.appendChild(mobileLogo);
   container.appendChild(mobileRight);
+
+  // Desktop layout: logo + credits (left) | nav (right)
+  container.appendChild(desktopLeft);
   container.appendChild(desktopNav);
 
   header.appendChild(container);

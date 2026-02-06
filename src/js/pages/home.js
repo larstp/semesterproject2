@@ -1,3 +1,3 @@
-import { renderHeader } from '../components/header.js';
+import { initializePage } from '../utils/main.js';
 
-renderHeader();
+initializePage();

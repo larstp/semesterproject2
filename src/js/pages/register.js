@@ -1,17 +1,9 @@
 import { register } from '../api/auth.js';
 import { getUser } from '../utils/storage.js';
-import { renderHeader } from '../components/header.js';
-import { renderFooter } from '../components/footer.js';
 import { createLoader } from '../components/loader.js';
-import { createLogoBackground } from '../components/logoBackground.js';
+import { initializePage } from '../utils/main.js';
 
-const body = document.querySelector('body');
-if (body) {
-  body.insertBefore(createLogoBackground(), body.firstChild);
-  body.insertBefore(renderHeader(), body.firstChild);
-}
-
-renderFooter();
+initializePage({ includeLogoBackground: true });
 
 /**
  * Checks if user is logged in
@@ -142,25 +134,7 @@ function createRegisterForm() {
 
   const passwordLabel = document.createElement('label');
   passwordLabel.className =
-    // ------------------------------------------------------------- Password validation feedback test
-    passwordInput.addEventListener('blur', () => {
-      const value = passwordInput.value;
-      if (value && value.length >= 8) {
-        passwordInput.className =
-          'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-celadon-500 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-celadon-600 focus:ring-2 focus:ring-celadon-200';
-        passwordInput.setAttribute('aria-invalid', 'false');
-      } else if (value) {
-        passwordInput.className =
-          'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-petal-frost-500 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-petal-frost-600 focus:ring-2 focus:ring-petal-frost-200';
-        passwordInput.setAttribute('aria-invalid', 'true');
-      } else {
-        passwordInput.className =
-          'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-cool-steel-200 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-blue-slate-500 focus:ring-2 focus:ring-blue-slate-200';
-        passwordInput.removeAttribute('aria-invalid');
-      }
-    });
-
-  ('block mb-2 text-sm font-semibold text-cool-steel-800');
+    'block mb-2 text-sm font-semibold text-cool-steel-800';
   passwordLabel.textContent = 'Password';
   passwordLabel.setAttribute('for', 'password');
   fieldsContainer.appendChild(passwordLabel);
@@ -177,6 +151,24 @@ function createRegisterForm() {
   passwordInput.title = 'Password must be at least 8 characters';
   passwordInput.setAttribute('aria-label', 'Password');
   fieldsContainer.appendChild(passwordInput);
+
+  // ---------------------------------------Password validation feedback test 2 (works now i hope)
+  passwordInput.addEventListener('blur', () => {
+    const value = passwordInput.value;
+    if (value && value.length >= 8) {
+      passwordInput.className =
+        'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-celadon-500 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-celadon-600 focus:ring-2 focus:ring-celadon-200';
+      passwordInput.setAttribute('aria-invalid', 'false');
+    } else if (value) {
+      passwordInput.className =
+        'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-petal-frost-500 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-petal-frost-600 focus:ring-2 focus:ring-petal-frost-200';
+      passwordInput.setAttribute('aria-invalid', 'true');
+    } else {
+      passwordInput.className =
+        'w-full p-4 text-base transition-all duration-300 bg-white border-2 rounded-lg border-cool-steel-200 text-blue-slate-900 placeholder:text-cool-steel-400 focus:outline-none focus:border-blue-slate-500 focus:ring-2 focus:ring-blue-slate-200';
+      passwordInput.removeAttribute('aria-invalid');
+    }
+  });
 
   const passwordHint = document.createElement('p');
   passwordHint.className = '-mt-2 text-xs text-cool-steel-700';
